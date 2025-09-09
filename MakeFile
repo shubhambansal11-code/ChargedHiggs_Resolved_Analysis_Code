@@ -1,0 +1,37 @@
+SDIR  = ./
+IDIR  = ./
+LDIR  = ./
+ROOTSYS   = $(shell echo $ROOTSYS)
+MAKEFLAGS = --no-print-directory -r -s
+INCLUDE = $(shell root-config --cflags)
+LIBS    = $(shell root-config --libs) -lTMVA -lMLP -lTreePlayer -lMinuit
+
+
+#GCC       = g++
+#SOFLAGS   = -shared 
+#SHAREDLIB = $(shell echo ${PWD})/HplusAna.so
+
+BINS7 = Event-Loop
+BINS9 = MVA-Training
+OBJS = 
+all: $(BINS7) $(BINS9)
+
+
+$(BINS7): % : main_batch.C
+	@echo -n "Building $@ ... "
+	$(CXX) $(CCFLAGS) $< -I$(IDIR) $(INCLUDE) TH1Fs/TH1Fs.C main/EventLoop.C utilis/NeutrinoBuilder.C utilis/Chi2_minimization.C -o execute.exe $(LIBS)
+	@echo "Done"
+
+$(BINS9): % : main_RunMVATraining.C
+	@echo -n "Building $@ ... "
+	$(CXX) $(CCFLAGS) $< -I$(IDIR) $(INCLUDE) -o execute_mvaTraining_V2.exe $(LIBS) 
+	@echo "Done"
+
+#$(SHAREDLIB): $(BINS7) $(BINS9) 
+#	echo "Building shared library ... "
+#       rm -f $(SHAREDLIB)
+#	$(GCC) -L$(shell root-config --libdir) $(SOFLAGS) $(BINS) $ -o $(SHAREDLIB)
+#	echo "Done"
+
+clean:
+	rm -f $(BINS)

@@ -1,0 +1,18 @@
+Executable      =/cephfs/user/s6subans/ChargedHiggsAna/Code/RunJob.sh
+
+arguments	= $(IN_PATH) $(FILE) $(WP) $(OUTDIR) $(Cluster) $(Process)
+Universe = vanilla
+
+transfer_executable=True
+
+output          = /cephfs/user/s6subans/ChargedHiggsout/HPlus.$(Cluster).$(Process).out
+error		=/cephfs/user/s6subans/ChargedHiggsError/HPlus.$(Cluster).$(Process).err
+log		=/cephfs/user/s6subans/ChargedHiggsLog/HPlus.$(Cluster).$(Process).log
+Request_memory	= 6000
+Request_cpus            = 1
+Request_disk            = 100 MB
++MaxRuntimeHours = 12
++RequestRuntime = 3600
++CephFS_IO = "medium"
++ContainerOS            = "CentOS7"
+queue $(NJOBS) 

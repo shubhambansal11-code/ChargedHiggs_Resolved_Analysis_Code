@@ -1,0 +1,10 @@
+#Transfer_input_files    = ../.ssh,../.globus,../.bash_history,../.gitconfig
+ 
+JobBatchName = CentOS7_interactive
++ContainerOS = "CentOS7"
++CephFS_IO = "medium"
++MaxRuntimeHours=12
+Request_cpus = 1
+Request_memory = 2 GB
+Request_disk = 100 MB
+Queue
